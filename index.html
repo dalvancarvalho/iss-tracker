@@ -19,8 +19,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;900&display=swap"
       rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;900&display=swap"
     />
     <link rel="stylesheet" href="./style.css" />
     <script
@@ -31,6 +31,7 @@
     ></script>
     <script src="./app.js" defer></script>
   </head>
+
   <body>
     <div class="content-wrapper">
       <h1 class="title">ISS Tracker</h1>
@@ -45,21 +46,20 @@
         is in real-time!
       </p>
       <div id="iss-map"></div>
-      <div class="info">
+      <div class="panel">
         <div class="coordinates-wrapper">
-          <p><b>Coordinates:</b></p>
+          <p>Coordinates:</p>
           <div class="coordinates">
-            <p><b>Latitude: </b><span class="lat">...</span></p>
-            <p><b>Longitude: </b><span class="lon">...</span></p>
+            <p><b>Latitude: </b><span class="lat">getting data...</span></p>
+            <p><b>Longitude: </b><span class="lon">getting data...</span></p>
           </div>
         </div>
         <div class="buttons-wrapper">
-          <p><b>Maps:</b></p>
+          <p>Map style:</p>
           <div class="buttons">
-            <button class="button std">Standard</button>
-            <button class="button ter">Terrain</button>
-            <button class="button sat">Satellite</button>
-            <button class="button hyb">Hybrid</button>
+            <button class="button highlighted" data-map="m">Roadmap</button>
+            <button class="button" data-map="s">Satellite</button>
+            <button class="button" data-map="y">Hybrid</button>
           </div>
         </div>
       </div>

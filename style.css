@@ -1,3 +1,5 @@
+/* style.css */
+
 *,
 *::before,
 *::after {
@@ -48,7 +50,7 @@ body {
   color: white;
 }
 
-.info {
+.panel {
   width: 100%;
   padding: 1rem;
   border-radius: 0.75rem;
@@ -66,12 +68,10 @@ body {
 .buttons-wrapper > p {
   margin-bottom: 1rem;
   font-size: 1.15rem;
+  font-weight: 600;
 }
 
-.coordinates-wrapper {
-  width: 100%;
-}
-
+.coordinates-wrapper,
 .buttons-wrapper {
   width: 100%;
 }
@@ -86,17 +86,23 @@ body {
   width: max-content;
   border: none;
   border-radius: 0.25em;
-  padding: 0.35em 0.65em;
+  padding: 0.35em 0;
+  width: 5.5rem;
   font-family: inherit;
   font-size: 1rem;
   color: white;
   cursor: pointer;
-  background-color: #454545;
+  background-color: #253b58;
   transition: background-color 150ms;
 }
 
 .button:hover {
-  background-color: #5c5c5c;
+  background-color: #3d587e;
+}
+
+.highlighted {
+  background-color: #486792;
+  transition: background-color 150ms;
 }
 
 .coordinates {
@@ -114,7 +120,7 @@ body {
 
 #iss-map {
   width: 100%;
-  aspect-ratio: 16/10;
+  aspect-ratio: 4/3;
   border-radius: 0.75rem;
 }
 
@@ -129,7 +135,7 @@ body {
     font-size: 1.25rem;
   }
 
-  .info {
+  .panel {
     flex-direction: row;
     gap: 0;
   }
@@ -139,16 +145,16 @@ body {
     font-size: 1.25rem;
   }
 
-  .coordinates-wrapper {
-    width: 37%;
-  }
-
-  .buttons-wrapper {
-    width: 63%;
-  }
-
   .coordinates {
     font-size: 1.15rem;
+  }
+
+  .button {
+    width: 5.05rem;
+  }
+
+  #iss-map {
+    aspect-ratio: 16/10;
   }
 }
 
@@ -162,22 +168,7 @@ body {
   }
 
   .subtitle {
-    margin: 1rem 0;
     font-size: 1.5rem;
-  }
-
-  .info {
-    flex-direction: row;
-    gap: 0;
-  }
-
-  .coordinates-wrapper > p,
-  .buttons-wrapper > p {
-    font-size: 1.25rem;
-  }
-
-  .coordinates-wrapper {
-    width: 40%;
   }
 
   .coordinates-wrapper > p,
@@ -187,5 +178,9 @@ body {
 
   .coordinates {
     font-size: 1.25rem;
+  }
+
+  .button {
+    width: 5.5rem;
   }
 }
