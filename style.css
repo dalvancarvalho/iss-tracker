@@ -13,6 +13,7 @@ body {
   padding: 0 1rem;
   font-family: 'Urbanist', sans-serif;
   background-image: url('./images/earth.webp');
+  background-color: #1a1a1a;
   background-size: cover;
   display: grid;
   place-items: center;
@@ -52,6 +53,7 @@ body {
 
 .panel {
   width: 100%;
+  border-top: #2f2f2f 1px solid;
   padding: 1rem;
   border-radius: 0.75rem;
   display: flex;
@@ -100,7 +102,7 @@ body {
   background-color: #3d587e;
 }
 
-.highlighted {
+.active {
   background-color: #486792;
   transition: background-color 150ms;
 }
