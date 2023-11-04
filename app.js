@@ -58,8 +58,8 @@ function changeMap(event) {
   tiles.addTo(myMap)
 
   // Highlights the active button
-  buttons.forEach((button) => button.classList.remove('highlighted'))
-  button.classList.add('highlighted')
+  buttons.forEach((button) => button.classList.remove('active'))
+  button.classList.add('active')
 }
 
 // Event listeners
