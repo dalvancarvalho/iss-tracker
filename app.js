@@ -58,7 +58,7 @@ function changeMap(event) {
   const button = event.target
   const mapStyle = button.dataset.map
   const tileUrl = `https://mt1.google.com/vt/lyrs=${mapStyle}&x={x}&y={y}&z={z}`
-  tiles = L.tileLayer(tileUrl)
+  tiles = L.tileLayer(tileUrl, { attribution })
   tiles.addTo(myMap)
 
   // Highlighting the active button
