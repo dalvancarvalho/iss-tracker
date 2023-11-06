@@ -6,12 +6,13 @@ const latSpan = document.querySelector('.lat')
 const lonSpan = document.querySelector('.lon')
 const buttons = document.querySelectorAll('.button')
 let initialLoad = true
+let tiles
 
 // Creating a map in Leaflet with the roadmap from Google
 const myMap = L.map('iss-map').setView([0, 0], 1)
 const attribution = 'Map data &copy; Google'
 const tileUrl = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
-const tiles = L.tileLayer(tileUrl, { attribution })
+tiles = L.tileLayer(tileUrl, { attribution })
 tiles.addTo(myMap)
 
 // Creating a marker with a custom icon
@@ -30,7 +31,7 @@ async function getData() {
     const data = await response.json()
     const { latitude, longitude } = data
 
-    // Sets map and marker coordinates
+    // Setting map and marker coordinates
     marker.setLatLng([latitude, longitude])
 
     if (initialLoad) {
@@ -38,7 +39,7 @@ async function getData() {
       initialLoad = false
     }
 
-    // Adds lat/lon info to the DOM elements
+    // Adding lat/lon info to the DOM elements
     latSpan.textContent = `${latitude.toFixed(2)}°`
     lonSpan.textContent = `${longitude.toFixed(2)}°`
   } catch (err) {
@@ -51,13 +52,16 @@ async function getData() {
 function changeMap(event) {
   // Changes the tiles of the map based on the clicked button
 
+  // Removing previous map
+  tiles.removeFrom(myMap)
+
   const button = event.target
   const mapStyle = button.dataset.map
   const tileUrl = `https://mt1.google.com/vt/lyrs=${mapStyle}&x={x}&y={y}&z={z}`
-  const tiles = L.tileLayer(tileUrl)
+  tiles = L.tileLayer(tileUrl)
   tiles.addTo(myMap)
 
-  // Highlights the active button
+  // Highlighting the active button
   buttons.forEach((button) => button.classList.remove('active'))
   button.classList.add('active')
 }
