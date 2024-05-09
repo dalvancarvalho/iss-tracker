@@ -10,18 +10,18 @@
       content="Track the real-time location of the International Space Station!"
     />
     <meta name="theme-color" content="#000203" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
       integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
       crossorigin=""
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
     />
     <link rel="stylesheet" href="./style.css" />
     <script
@@ -34,8 +34,8 @@
   </head>
 
   <body>
-    <div class="content-wrapper">
-      <h1 class="title">ISS Tracker</h1>
+    <main>
+      <h1>ISS Tracker</h1>
       <p class="subtitle">
         Track the real-time location of the
         <a
@@ -45,24 +45,36 @@
           ><b>International Space Station!</b></a
         >
       </p>
-      <div id="iss-map"></div>
+      <div id="map"></div>
       <div class="panel">
-        <div class="coordinates-wrapper">
-          <p>Coordinates:</p>
-          <div class="coordinates">
-            <p><b>Latitude: </b><span class="lat">getting data...</span></p>
-            <p><b>Longitude: </b><span class="lon">getting data...</span></p>
-          </div>
+        <div class="info">
+          <h3>Real-time information</h3>
+          <ul class="topics">
+            <li class="topic">Latitude: <span class="lat">...</span></li>
+            <li class="topic">Longitude: <span class="lon">...</span></li>
+            <li class="topic">Altitude: <span class="alt">...</span></li>
+            <li class="topic">Velocity: <span class="vel">...</span></li>
+          </ul>
         </div>
-        <div class="buttons-wrapper">
-          <p>Map style:</p>
-          <div class="buttons">
-            <button class="button active" data-map="m">Roadmap</button>
-            <button class="button" data-map="s">Satellite</button>
-            <button class="button" data-map="y">Hybrid</button>
+        <div class="options">
+          <h3>Options</h3>
+          <div class="map-options">
+            <h4>Map style</h4>
+            <div class="buttons">
+              <button class="active" data-map="m">Roadmap</button>
+              <button data-map="s">Satellite</button>
+              <button data-map="y">Hybrid</button>
+            </div>
+          </div>
+          <div class="unit-options">
+            <h4>Unit of measurement</h4>
+            <div class="buttons">
+              <button class="active" data-unit="miles">Miles</button>
+              <button data-unit="kilometers">Kilometers</button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   </body>
 </html>

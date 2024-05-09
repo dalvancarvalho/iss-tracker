@@ -12,7 +12,7 @@ body {
   height: 100dvh;
   padding: 0 1rem;
   font-family: 'Urbanist', sans-serif;
-  background-image: url('./images/earth.webp');
+  background-image: url('./assets/bg.webp');
   background-color: #1a1a1a;
   background-size: cover;
   display: grid;
@@ -20,17 +20,27 @@ body {
   justify-items: center;
 }
 
-.content-wrapper {
+main {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
 }
 
-.title {
+h1 {
   font-size: 3rem;
   font-weight: 900;
   color: white;
+}
+
+h3 {
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .subtitle {
@@ -38,17 +48,30 @@ body {
   font-size: 1.15rem;
   font-weight: 400;
   text-align: center;
+  text-wrap: pretty;
   color: #d8d8d8;
 }
 
 .subtitle > a {
   text-decoration: none;
   color: inherit;
+  transition: color 0.3s ease-in-out;
 }
 
 .subtitle > a:hover {
   text-decoration: underline;
-  color: white;
+  color: #ffffff;
+}
+
+#map {
+  width: 100%;
+  aspect-ratio: 4/3;
+  border-radius: 0.75rem;
+}
+
+.leaflet-marker-icon {
+  pointer-events: none;
+  cursor: inherit;
 }
 
 .panel {
@@ -66,16 +89,35 @@ body {
   backdrop-filter: blur(4px);
 }
 
-.coordinates-wrapper > p,
-.buttons-wrapper > p {
-  margin-bottom: 1rem;
-  font-size: 1.15rem;
+.info,
+.options {
+  width: 100%;
+}
+
+.topics,
+.map-options,
+.unit-options {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+}
+
+.topics {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: #ffffff;
+  font: monospace;
+  list-style-type: none;
+}
+
+.topic {
   font-weight: 600;
 }
 
-.coordinates-wrapper,
-.buttons-wrapper {
-  width: 100%;
+span {
+  font-weight: normal;
+  font-family: monospace;
+  color: #d8d8d8;
 }
 
 .buttons {
@@ -84,7 +126,7 @@ body {
   gap: 0.5rem;
 }
 
-.button {
+button {
   width: max-content;
   border: none;
   border-radius: 0.25em;
@@ -92,38 +134,21 @@ body {
   width: 5.5rem;
   font-family: inherit;
   font-size: 1rem;
-  color: white;
+  color: #ffffff;
   cursor: pointer;
-  background-color: #253b58;
-  transition: background-color 150ms;
+  background-color: #374f70;
+  transition: background-color 150ms, color 150ms;
 }
 
-.button:hover {
-  background-color: #3d587e;
+button:hover {
+  color: #ffffff;
+  background-color: #628cc5;
 }
 
 .active {
-  background-color: #486792;
+  color: #ffffff;
+  background-color: #628cc5;
   transition: background-color 150ms;
-}
-
-.coordinates {
-  font-size: 1rem;
-  color: #d8d8d8;
-}
-
-.coordinates > p {
-  margin: 0.2rem 0;
-}
-
-.coordinates > p > span {
-  font-family: monospace;
-}
-
-#iss-map {
-  width: 100%;
-  aspect-ratio: 4/3;
-  border-radius: 0.75rem;
 }
 
 /* Media queries */
@@ -140,15 +165,6 @@ body {
   .panel {
     flex-direction: row;
     gap: 0;
-  }
-
-  .coordinates-wrapper > p,
-  .buttons-wrapper > p {
-    font-size: 1.25rem;
-  }
-
-  .coordinates {
-    font-size: 1.15rem;
   }
 
   .button {

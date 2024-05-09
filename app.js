@@ -1,73 +1,159 @@
 /* app.js */
 
+// DOM elements
+const latSpan = document.querySelector('.lat') // Latitude
+const lonSpan = document.querySelector('.lon') // Longitude
+const altSpan = document.querySelector('.alt') // Altitude
+const velSpan = document.querySelector('.vel') // Velocity
+const issInfo = document.querySelectorAll('span')
+const mapOptions = document.querySelectorAll('.map-options > * button')
+const unitOptions = document.querySelectorAll('.unit-options > * button')
+
 // Global variables
 const issData = 'https://api.wheretheiss.at/v1/satellites/25544'
-const latSpan = document.querySelector('.lat')
-const lonSpan = document.querySelector('.lon')
-const buttons = document.querySelectorAll('.button')
-let initialLoad = true
-let tiles
-
-// Creating a map in Leaflet with the roadmap from Google
-const myMap = L.map('iss-map').setView([0, 0], 1)
+const initialTiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
 const attribution = 'Map data &copy; Google'
-const tileUrl = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
-tiles = L.tileLayer(tileUrl, { attribution })
-tiles.addTo(myMap)
-
-// Creating a marker with a custom icon
-const issIcon = L.icon({
-  iconUrl: './images/iss.webp',
+const iconOptions = {
+  iconUrl: './assets/iss_dark.png',
   iconSize: [100, 70],
   iconAnchor: [50, 35],
-})
-const marker = L.marker([0, 0], { icon: issIcon }).addTo(myMap)
+}
 
-async function getData() {
+let initialLoad = true
+let unit = 'miles'
+let alt, lat, lon, map, marker, tiles, vel
+
+// Functions
+const createMap = () => {
+  // Creates a map with tiles from Google and marker with ISS image
+
+  // Tiles
+  map = L.map('map').setView([0, 0], 1)
+  tiles = L.tileLayer(initialTiles, { attribution })
+  tiles.addTo(map)
+
+  // Marker
+  const issIcon = L.icon({ ...iconOptions })
+  marker = L.marker([0, 0], { icon: issIcon }).addTo(map)
+}
+
+const fetchIss = async () => {
   // Fetches ISS data
 
   try {
     const response = await fetch(issData)
     const data = await response.json()
-    const { latitude, longitude } = data
-
-    // Setting map and marker coordinates
-    marker.setLatLng([latitude, longitude])
-
-    if (initialLoad) {
-      myMap.setView([latitude, longitude], 3)
-      initialLoad = false
-    }
-
-    // Adding lat/lon info to the DOM elements
-    latSpan.textContent = `${latitude.toFixed(2)}°`
-    lonSpan.textContent = `${longitude.toFixed(2)}°`
+    return data
   } catch (err) {
     console.error(err)
-    latSpan.textContent = 'not available'
-    lonSpan.textContent = 'not available'
   }
 }
 
-function changeMap(event) {
-  // Changes the tiles of the map based on the clicked button
+const refreshInfo = async () => {
+  // Updates the global variables with new data
 
-  // Removing previous map
-  tiles.removeFrom(myMap)
+  try {
+    const { altitude, latitude, longitude, velocity } = await fetchIss()
 
-  const button = event.target
+    lat = latitude
+    lon = longitude
+    alt = altitude
+    vel = velocity
+
+    marker.setLatLng([lat, lon]) // Sets marker coordinates
+    refreshDom()
+    checkInitialLoad()
+  } catch (err) {
+    console.error(err)
+    issInfo.forEach((item) => (item.textContent = 'not available'))
+  }
+}
+
+const refreshDom = () => {
+  // Updates the DOM elements
+
+  // Altitude is given in KILOMETERS
+  // Velocity is given in KILOMETERS PER HOUR
+
+  const KILOMETER_TO_MILE = 0.621371
+  const HOUR_TO_SECOND = 0.000277778
+
+  latSpan.textContent = `${lat.toFixed(2)}°`
+  lonSpan.textContent = `${lon.toFixed(2)}°`
+
+  // prettier-ignore
+  switch (unit) {
+    case 'miles':
+      altSpan.textContent = (alt * KILOMETER_TO_MILE).toFixed(2) + ' miles'
+      velSpan.textContent = (vel * KILOMETER_TO_MILE * HOUR_TO_SECOND).toFixed(2) + ' miles/s'
+      break
+
+    case 'kilometers':
+      altSpan.textContent = alt.toFixed(2) + ' km'
+      velSpan.textContent = (vel * HOUR_TO_SECOND).toFixed(2) + ' km/s'
+      break
+  }
+}
+
+const checkInitialLoad = () => {
+  // Sets map location to match the ISS location when the app starts
+
+  if (!initialLoad) return
+
+  map.setView([lat, lon], 3)
+  initialLoad = false
+}
+
+const changeMap = (e) => {
+  // Changes the map tiles and marker based in the selected style
+
+  const button = e.target
   const mapStyle = button.dataset.map
-  const tileUrl = `https://mt1.google.com/vt/lyrs=${mapStyle}&x={x}&y={y}&z={z}`
-  tiles = L.tileLayer(tileUrl, { attribution })
-  tiles.addTo(myMap)
+  const iconTheme = mapStyle === 'm' ? 'dark' : 'light'
 
-  // Highlighting the active button
-  buttons.forEach((button) => button.classList.remove('active'))
+  // Layer cleanup (map and marker)
+  tiles.remove()
+  marker.remove()
+
+  // New tiles and marker
+  const tileUrl = `https://mt1.google.com/vt/lyrs=${mapStyle}&x={x}&y={y}&z={z}`
+  const issIcon = L.icon({
+    ...iconOptions,
+    iconUrl: `./assets/iss_${iconTheme}.png`,
+  })
+
+  tiles = L.tileLayer(tileUrl, { attribution }).addTo(map)
+  marker = L.marker([lat, lon], { icon: issIcon }).addTo(map)
+
+  // Highlights the active button
+  mapOptions.forEach((button) => button.classList.remove('active'))
   button.classList.add('active')
 }
 
-// Event listeners
-buttons.forEach((button) => button.addEventListener('click', (event) => changeMap(event)))
+const changeUnit = (e) => {
+  // Changes between miles and kilometers
 
-// Updating the data every second
-setInterval(getData, 1000)
+  const button = e.target
+  unit = button.dataset.unit
+
+  refreshDom()
+
+  // Highlights the active button
+  unitOptions.forEach((button) => button.classList.remove('active'))
+  button.classList.add('active')
+}
+
+const init = () => {
+  // Initiates the application
+
+  createMap()
+
+  setInterval(refreshInfo, 1000) // Updates data every second
+}
+
+// Event listeners
+mapOptions.forEach((button) => button.addEventListener('click', (e) => changeMap(e)))
+
+unitOptions.forEach((button) => button.addEventListener('click', (e) => changeUnit(e)))
+
+document.addEventListener('DOMContentLoaded', () => init())
