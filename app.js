@@ -4,10 +4,11 @@
 const latSpan = document.querySelector('.lat') // Latitude
 const lonSpan = document.querySelector('.lon') // Longitude
 const altSpan = document.querySelector('.alt') // Altitude
-const velSpan = document.querySelector('.vel') // Velocity
+const spdSpan = document.querySelector('.spd') // Orbital speed
 const issInfo = document.querySelectorAll('span')
-const mapOptions = document.querySelectorAll('.map-options > * button')
-const unitOptions = document.querySelectorAll('.unit-options > * button')
+const mapBehaviorButtons = document.querySelectorAll('.map-behavior > * button')
+const mapStyleButtons = document.querySelectorAll('.map-style > * button')
+const unitButtons = document.querySelectorAll('.unit > * button')
 
 // Global variables
 const issData = 'https://api.wheretheiss.at/v1/satellites/25544'
@@ -20,8 +21,9 @@ const iconOptions = {
 }
 
 let initialLoad = true
+let isCentered = false
 let unit = 'miles'
-let alt, lat, lon, map, marker, tiles, vel
+let alt, lat, lon, map, marker, spd, tiles
 
 // Functions
 const createMap = () => {
@@ -58,14 +60,15 @@ const refreshInfo = async () => {
     lat = latitude
     lon = longitude
     alt = altitude
-    vel = velocity
+    spd = velocity
 
     marker.setLatLng([lat, lon]) // Sets marker coordinates
+    checkMap()
     refreshDom()
     checkInitialLoad()
   } catch (err) {
     console.error(err)
-    issInfo.forEach((item) => (item.textContent = 'not available'))
+    issInfo.forEach((topic) => (topic.textContent = 'not available'))
   }
 }
 
@@ -75,6 +78,7 @@ const refreshDom = () => {
   // Altitude is given in KILOMETERS
   // Velocity is given in KILOMETERS PER HOUR
 
+  // Conversion factors (to be multiplied by)
   const KILOMETER_TO_MILE = 0.621371
   const HOUR_TO_SECOND = 0.000277778
 
@@ -84,19 +88,28 @@ const refreshDom = () => {
   // prettier-ignore
   switch (unit) {
     case 'miles':
+    default:
       altSpan.textContent = (alt * KILOMETER_TO_MILE).toFixed(2) + ' miles'
-      velSpan.textContent = (vel * KILOMETER_TO_MILE * HOUR_TO_SECOND).toFixed(2) + ' miles/s'
+      spdSpan.textContent = (spd * KILOMETER_TO_MILE * HOUR_TO_SECOND).toFixed(2) + ' miles/s'
       break
 
     case 'kilometers':
       altSpan.textContent = alt.toFixed(2) + ' km'
-      velSpan.textContent = (vel * HOUR_TO_SECOND).toFixed(2) + ' km/s'
+      spdSpan.textContent = (spd * HOUR_TO_SECOND).toFixed(2) + ' km/s'
       break
   }
 }
 
+const checkMap = () => {
+  // Sets map view to always match the ISS location if 'Center ISS' is selected
+
+  if (!isCentered) return
+
+  map.setView([lat, lon])
+}
+
 const checkInitialLoad = () => {
-  // Sets map location to match the ISS location when the app starts
+  // Sets map view to match the ISS location when the app starts
 
   if (!initialLoad) return
 
@@ -104,12 +117,35 @@ const checkInitialLoad = () => {
   initialLoad = false
 }
 
-const changeMap = (e) => {
+const changeMapBehavior = (e) => {
+  // Changes the behavior of the map, whether it is free to move or centered on the ISS position
+
+  const button = e.target
+  const { mapBehavior } = button.dataset
+
+  switch (mapBehavior) {
+    case 'free':
+    default:
+      isCentered = false
+      break
+
+    case 'centered':
+      map.setView([lat, lon])
+      isCentered = true
+      break
+  }
+
+  // Highlights the active button
+  mapBehaviorButtons.forEach((button) => button.classList.remove('active'))
+  button.classList.add('active')
+}
+
+const changeMapStyle = (e) => {
   // Changes the map tiles and marker based in the selected style
 
   const button = e.target
-  const mapStyle = button.dataset.map
-  const iconTheme = mapStyle === 'm' ? 'dark' : 'light'
+  const { mapStyle } = button.dataset
+  const iconTheme = mapStyle === 'm' || mapStyle === 'p' ? 'dark' : 'light'
 
   // Layer cleanup (map and marker)
   tiles.remove()
@@ -126,7 +162,7 @@ const changeMap = (e) => {
   marker = L.marker([lat, lon], { icon: issIcon }).addTo(map)
 
   // Highlights the active button
-  mapOptions.forEach((button) => button.classList.remove('active'))
+  mapStyleButtons.forEach((button) => button.classList.remove('active'))
   button.classList.add('active')
 }
 
@@ -139,7 +175,7 @@ const changeUnit = (e) => {
   refreshDom()
 
   // Highlights the active button
-  unitOptions.forEach((button) => button.classList.remove('active'))
+  unitButtons.forEach((button) => button.classList.remove('active'))
   button.classList.add('active')
 }
 
@@ -147,13 +183,18 @@ const init = () => {
   // Initiates the application
 
   createMap()
-
   setInterval(refreshInfo, 1000) // Updates data every second
 }
 
 // Event listeners
-mapOptions.forEach((button) => button.addEventListener('click', (e) => changeMap(e)))
+mapBehaviorButtons.forEach((button) =>
+  button.addEventListener('click', (e) => changeMapBehavior(e))
+)
 
-unitOptions.forEach((button) => button.addEventListener('click', (e) => changeUnit(e)))
+mapStyleButtons.forEach((button) =>
+  button.addEventListener('click', (e) => changeMapStyle(e))
+)
 
-document.addEventListener('DOMContentLoaded', () => init())
+unitButtons.forEach((button) => button.addEventListener('click', (e) => changeUnit(e)))
+
+document.addEventListener('DOMContentLoaded', init)

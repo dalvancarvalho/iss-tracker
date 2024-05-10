@@ -1,5 +1,6 @@
 /* style.css */
 
+/* CSS reset */
 *,
 *::before,
 *::after {
@@ -8,6 +9,46 @@
   box-sizing: border-box;
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #202020;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #424242;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Leaflet elements */
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+  background-color: #374f70 !important;
+  transition: background-color 150ms;
+}
+
+.leaflet-control-zoom-in:hover,
+.leaflet-control-zoom-out:hover {
+  background-color: #628cc5 !important;
+}
+
+.leaflet-control-zoom-in > span,
+.leaflet-control-zoom-out > span {
+  color: #fff;
+}
+
+.leaflet-marker-icon {
+  pointer-events: none;
+  cursor: inherit;
+}
+
+/* General classes */
 body {
   height: 100dvh;
   padding: 0 1rem;
@@ -38,8 +79,41 @@ h3 {
   color: #ffffff;
 }
 
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.led-wrapper {
+  position: relative;
+  width: 10px;
+  height: 10px;
+}
+
+.led,
+.led2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: #00c600;
+}
+
+.led2 {
+  background-color: #00ff00;
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
 h4 {
+  margin-top: 1rem;
   margin-bottom: 0.5rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -67,11 +141,7 @@ h4 {
   width: 100%;
   aspect-ratio: 4/3;
   border-radius: 0.75rem;
-}
-
-.leaflet-marker-icon {
-  pointer-events: none;
-  cursor: inherit;
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
 .panel {
@@ -87,6 +157,7 @@ h4 {
   color: white;
   background-color: #1d1d1dc0;
   backdrop-filter: blur(4px);
+  box-shadow: 2px 2px 4px 2px rgba(0, 0, 0, 0.25);
 }
 
 .info,
@@ -94,17 +165,12 @@ h4 {
   width: 100%;
 }
 
-.topics,
-.map-options,
-.unit-options {
-  margin-top: 1rem;
-  font-size: 1.1rem;
-}
-
 .topics {
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  font-size: 1.1rem;
   color: #ffffff;
   font: monospace;
   list-style-type: none;
@@ -200,5 +266,14 @@ button:hover {
 
   .button {
     width: 5.5rem;
+  }
+}
+
+/* Animations */
+@keyframes ping {
+  75%,
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
   }
 }

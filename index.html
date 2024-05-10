@@ -48,26 +48,42 @@
       <div id="map"></div>
       <div class="panel">
         <div class="info">
-          <h3>Real-time information</h3>
-          <ul class="topics">
-            <li class="topic">Latitude: <span class="lat">...</span></li>
-            <li class="topic">Longitude: <span class="lon">...</span></li>
-            <li class="topic">Altitude: <span class="alt">...</span></li>
-            <li class="topic">Velocity: <span class="vel">...</span></li>
-          </ul>
+          <div class="title-wrapper">
+            <div class="led-wrapper">
+              <div class="led"></div>
+              <div class="led2 animate-ping"></div>
+            </div>
+            <h3>Real-time information</h3>
+          </div>
+          <div>
+            <ul class="topics">
+              <li class="topic">Latitude: <span class="lat">...</span></li>
+              <li class="topic">Longitude: <span class="lon">...</span></li>
+              <li class="topic">Altitude: <span class="alt">...</span></li>
+              <li class="topic">Orbital speed: <span class="spd">...</span></li>
+            </ul>
+          </div>
         </div>
         <div class="options">
           <h3>Options</h3>
-          <div class="map-options">
-            <h4>Map style</h4>
+          <div class="map-behavior">
+            <h4>Map behavior:</h4>
             <div class="buttons">
-              <button class="active" data-map="m">Roadmap</button>
-              <button data-map="s">Satellite</button>
-              <button data-map="y">Hybrid</button>
+              <button class="active" data-map-behavior="free">Free move</button>
+              <button data-map-behavior="centered">Center ISS</button>
             </div>
           </div>
-          <div class="unit-options">
-            <h4>Unit of measurement</h4>
+          <div class="map-style">
+            <h4>Map style:</h4>
+            <div class="buttons">
+              <button class="active" data-map-style="m">Roadmap</button>
+              <button data-map-style="p">Terrain</button>
+              <button data-map-style="s">Satellite</button>
+              <button data-map-style="y">Hybrid</button>
+            </div>
+          </div>
+          <div class="unit">
+            <h4>Unit of measurement:</h4>
             <div class="buttons">
               <button class="active" data-unit="miles">Miles</button>
               <button data-unit="kilometers">Kilometers</button>
