@@ -199,7 +199,7 @@ li > * span {
   color: #d8d8d8;
 }
 
-.info-link {
+.link {
   margin-top: 2rem;
   display: flex;
   align-items: center;
@@ -208,13 +208,13 @@ li > * span {
   font-weight: 700;
 }
 
-.info-link > a {
+.link > a {
   text-decoration: none;
   color: #d8d8d8;
   transition: color 0.3s ease-in-out;
 }
 
-.info-link > a:hover {
+.link > a:hover {
   text-decoration: underline;
   color: #ffffff;
 }
