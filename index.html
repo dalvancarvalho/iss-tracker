@@ -10,7 +10,7 @@
       content="Track the real-time location of the International Space Station!"
     />
     <meta name="theme-color" content="#000203" />
-    <link rel="icon" type="image/png" sizes="64x64" href="/assets/favicon.png" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/assets/icons/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -37,13 +37,8 @@
     <main>
       <h1>ISS Tracker</h1>
       <p class="subtitle">
-        Track the real-time location of the
-        <a
-          href="https://www.nasa.gov/international-space-station/"
-          target="_blank"
-          rel="noopener noreferrer"
-          ><b>International Space Station!</b></a
-        >
+        Track the location of the
+        <span>International Space Station!</span>
       </p>
       <div id="map"></div>
       <div class="panel">
@@ -55,17 +50,47 @@
             </div>
             <h3>Real-time information</h3>
           </div>
-          <div>
-            <ul class="topics">
-              <li class="topic">Latitude: <span class="lat">...</span></li>
-              <li class="topic">Longitude: <span class="lon">...</span></li>
-              <li class="topic">Altitude: <span class="alt">...</span></li>
-              <li class="topic">Orbital speed: <span class="spd">...</span></li>
+          <div class="topics">
+            <ul>
+              <li class="topic">
+                <img class="icon" src="./assets/icons/latitude.png" alt="latitude icon" />
+                <p>Latitude: <span class="lat">...</span></p>
+              </li>
+              <li class="topic">
+                <img
+                  class="icon"
+                  src="./assets/icons/longitude.png"
+                  alt="longitude icon"
+                />
+                <p>Longitude: <span class="lon">...</span></p>
+              </li>
+              <li class="topic">
+                <img class="icon" src="./assets/icons/altitude.png" alt="altitude icon" />
+                <p>Altitude: <span class="alt">...</span></p>
+              </li>
+              <li class="topic">
+                <img class="icon" src="./assets/icons/speed.png" alt="speed icon" />
+                <p>Orbital speed: <span class="spd">...</span></p>
+              </li>
             </ul>
+            <div class="info-link">
+              <img class="icon" src="./assets/icons/link.png" alt="link icon" />
+              <a
+                href="https://www.nasa.gov/international-space-station/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Learn more about the ISS...
+              </a>
+            </div>
           </div>
         </div>
-        <div class="options">
-          <h3>Options</h3>
+        <div class="divider"></div>
+        <div class="settings">
+          <div class="title-wrapper">
+            <img class="icon" src="./assets/icons/settings.png" alt="settings icon" />
+            <h3>Settings</h3>
+          </div>
           <div class="map-behavior">
             <h4>Map behavior:</h4>
             <div class="buttons">

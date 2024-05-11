@@ -15,7 +15,7 @@ const issData = 'https://api.wheretheiss.at/v1/satellites/25544'
 const initialTiles = 'https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}'
 const attribution = 'Map data &copy; Google'
 const iconOptions = {
-  iconUrl: './assets/iss_dark.png',
+  iconUrl: './assets/icons/iss_dark.png',
   iconSize: [100, 70],
   iconAnchor: [50, 35],
 }
@@ -155,7 +155,7 @@ const changeMapStyle = (e) => {
   const tileUrl = `https://mt1.google.com/vt/lyrs=${mapStyle}&x={x}&y={y}&z={z}`
   const issIcon = L.icon({
     ...iconOptions,
-    iconUrl: `./assets/iss_${iconTheme}.png`,
+    iconUrl: `./assets/icons/iss_${iconTheme}.png`,
   })
 
   tiles = L.tileLayer(tileUrl, { attribution }).addTo(map)

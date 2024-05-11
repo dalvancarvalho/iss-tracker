@@ -6,7 +6,7 @@
 <div align="center">
   <img
     style="width: 700px"
-    src="./images/iss-tracker.png"
+    src="./assets/banner.png"
     alt="banner"
   />
 </div>
@@ -31,7 +31,8 @@ The **International Space Station (ISS) Tracker** is a web application that trac
 
 Check out the live demo of the ISS Tracker [here](https://iss.dalvanc.com/).
 
-##  Contact
+## Contact
+
 If you have any questions or suggestions, please feel free to contact me at [contact@dalvanc.com](mailto:contact@dalvanc.com).
 
 ## License
