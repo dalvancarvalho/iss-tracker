@@ -6,7 +6,7 @@
 <div align="center">
   <img
     style="width: 700px"
-    src="./assets/banner.png"
+    src="./assets/og-banner.png"
     alt="banner"
   />
 </div>
@@ -24,7 +24,7 @@ The **International Space Station (ISS) Tracker** is a web application that trac
 
 ## Usage
 
-- The ISS Tracker will automatically fetch the ISS's current coordinates and display its position on the map.
+- The ISS Tracker will automatically fetch the ISS's current information and display its position on the map.
 - You can zoom in, pan, and explore the map to track the ISS in real time.
 
 ## Demo
