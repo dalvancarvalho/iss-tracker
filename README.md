@@ -13,7 +13,7 @@
 
 ## About
 
-The **International Space Station (ISS) Tracker** is a web application that tracks the real-time location of the ISS using a fetch call to a [publicly available API](https://wheretheiss.at/w/developer) and displays this location on an interactive map powered by [Leaflet](https://leafletjs.com/) and [Google](https://about.google/). Special thanks to [The Coding Train](https://thecodingtrain.com/) for the core concept that served as a foundation for this project.
+The **International Space Station (ISS) Tracker** is a simple vanilla JavaScript web application that tracks the real-time location of the ISS using a fetch call to a [publicly available API](https://wheretheiss.at/w/developer) and displays this location on an interactive map powered by [Leaflet](https://leafletjs.com/) and [Google](https://about.google/). Special thanks to [The Coding Train](https://thecodingtrain.com/) for the core concept that served as a foundation for this project.
 
 ## Features
 
