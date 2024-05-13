@@ -40,3 +40,5 @@ If you have any questions or suggestions, please feel free to contact me at [con
 This project is licensed under the **MIT license**. You can read the full license by clicking on the link below:
 
 **[📄 MIT License - ISS Tracker](./LICENSE)**
+
+&copy; 2024 **Dalvan Carvalho**
